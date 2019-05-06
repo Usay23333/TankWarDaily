@@ -13,7 +13,7 @@ public class Boom {
 	}
 	
 	public void paint(Graphics g) {
-			g.drawImage(Resource.booms[boomStep++], x, y, null);
+			g.drawImage(ResourceMgr.booms[boomStep++], x, y, null);
 			if (boomStep >= 16) {
 				tf.booms.remove(this);
 			}

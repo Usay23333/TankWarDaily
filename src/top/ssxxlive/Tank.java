@@ -12,8 +12,8 @@ public class Tank {
 	private boolean living = true;
 	private boolean moving = false;
 	private TankFrame tf;
-	private static int tankWidth = Resource.goodTankU.getWidth();
-	private static int tankHeight = Resource.goodTankU.getHeight();
+	private static int tankWidth = ResourceMgr.goodTankU.getWidth();
+	private static int tankHeight = ResourceMgr.goodTankU.getHeight();
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 	
@@ -102,16 +102,16 @@ public class Tank {
 	public void paint(Graphics g) {
 		switch (tankDir) {
 		case UP:
-			g.drawImage(this.getGroup() == Group.GOOD ? Resource.goodTankU : Resource.badTankU, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
 			break;
 		case DOWN:
-			g.drawImage(this.getGroup() == Group.GOOD ? Resource.goodTankD : Resource.badTankD, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
 			break;
 		case LEFT:
-			g.drawImage(this.getGroup() == Group.GOOD ? Resource.goodTankL : Resource.badTankL, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
 			break;
 		case RIGHT:
-			g.drawImage(this.getGroup() == Group.GOOD ? Resource.goodTankR : Resource.badTankR, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
 			break;
 		}
 		

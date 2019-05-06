@@ -10,14 +10,14 @@ import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import top.ssxxlive.Resource;
+import top.ssxxlive.ResourceMgr;
 
 class ImageRotateTest {
 
 	@Test
 	void test() {
 		try {
-			BufferedImage tankL = ImageIO.read(Resource.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
+			BufferedImage tankL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
 			tankL = rotateImage(tankL, 90);
 			Assertions.assertNotNull(tankL);
 		} catch (IOException e) {

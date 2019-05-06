@@ -96,7 +96,7 @@ public class TankFrame extends Frame {
 	}
 
 	public void newAITanks() {
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= (Integer)PropertyMgr.get("initCountTank"); i++) {
 			aiTanks.add(new Tank(80 * i, 100, 1, Group.BAD, this));
 		}
 	}

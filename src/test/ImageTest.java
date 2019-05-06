@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
 
-import top.ssxxlive.Resource;
+import top.ssxxlive.ResourceMgr;
 
 class ImageTest {
 
@@ -16,7 +16,7 @@ class ImageTest {
 	void test() {
 		//fail("Not yet implemented");
 		try {
-			BufferedImage tankU = ImageIO.read(Resource.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
+			BufferedImage tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
 			assertNotNull(tankU);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
