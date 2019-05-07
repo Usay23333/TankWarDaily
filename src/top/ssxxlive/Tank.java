@@ -104,7 +104,7 @@ public class Tank {
 
 	public void paint(Graphics g) {
 		switch (tankDir) {
-		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片
+		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片 第三个判断敌方两张Tank图片
 			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? ResourceMgr.goodTankU : ResourceMgr.goodTankU1
 					: y % 2 == 0 ? ResourceMgr.badTankU : ResourceMgr.badTankU1, x, y, null);
 			break;
