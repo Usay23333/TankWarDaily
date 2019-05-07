@@ -11,36 +11,36 @@ public class Bullet {
 	private TankFrame tf;
 	private static int bulletWidth = ResourceMgr.bulletU.getWidth();
 	private static int bulletHeight = ResourceMgr.bulletU.getHeight();
-	
+
 	Rectangle rect = new Rectangle();
-	
-	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, TankFrame tf) {
+
+	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, TankFrame tf,Tank t) {
 		if (bulletDir == Direction.UP) {
-			this.x = x + 15;
-			this.y = y - 30;
+			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
+			this.y = y - bulletHeight;
 		}
 		if (bulletDir == Direction.DOWN) {
-			this.x = x + 15;
-			this.y = y + 60;
+			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
+			this.y = y + t.getTankHeight();
 		}
 		if (bulletDir == Direction.LEFT) {
-			this.x = x - 30;
-			this.y = y + 15;
+			this.x = x - bulletWidth;
+			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
 		}
 		if (bulletDir == Direction.RIGHT) {
-			this.x = x + 60;
-			this.y = y + 15;
+			this.x = x + t.getTankWidth();
+			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
 		}
 		this.speed = speed;
 		this.bulletDir = bulletDir;
 		this.group = group;
 		this.tf = tf;
-		
+
 		rect.x = x;
 		rect.y = y;
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
-		
+
 	}
 
 	public void setLive(boolean isLive) {
@@ -91,10 +91,10 @@ public class Bullet {
 			break;
 		}
 		bulletGo();
-		
+
 		rect.x = x;
 		rect.y = y;
-		
+
 	}
 
 	public void bulletGo() {
@@ -125,7 +125,7 @@ public class Bullet {
 		}
 
 	}
-	
+
 	public void collideWith(Tank t) {
 		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
 			t.setLiving(false);

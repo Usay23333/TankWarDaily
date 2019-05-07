@@ -12,11 +12,12 @@ public class Tank {
 	private boolean living = true;
 	private boolean moving = false;
 	private TankFrame tf;
-	private static int tankWidth = ResourceMgr.goodTankU.getWidth();
-	private static int tankHeight = ResourceMgr.goodTankU.getHeight();
+	private int tankWidth;
+	private int tankHeight;
+
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
-	
+
 	Tank(int x, int y, int speed, Group group, TankFrame tf) {
 		this.x = x;
 		this.y = y;
@@ -26,13 +27,15 @@ public class Tank {
 		if (group == Group.BAD) {
 			this.moving = true;
 			this.tankDir = Direction.values()[r.nextInt(4)];
+			this.tankWidth = ResourceMgr.badTankU.getWidth();
+			this.tankHeight = ResourceMgr.badTankU.getHeight();
 		}
-		
+
 		rect.x = x;
 		rect.y = y;
-		rect.width = tankWidth;
-		rect.height = tankHeight;
-		
+		rect.width = tankWidth = ResourceMgr.goodTankU.getWidth();
+		rect.height = tankHeight = ResourceMgr.goodTankU.getHeight();
+
 	}
 
 	public int getX() {
@@ -90,43 +93,47 @@ public class Tank {
 	public void setMoving(boolean moving) {
 		this.moving = moving;
 	}
-	
-	public static int getTankWidth() {
+
+	public int getTankWidth() {
 		return tankWidth;
 	}
 
-	public static int getTankHeight() {
+	public int getTankHeight() {
 		return tankHeight;
 	}
-	
+
 	public void paint(Graphics g) {
 		switch (tankDir) {
-		case UP:
-			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片
+			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? ResourceMgr.goodTankU : ResourceMgr.goodTankU1
+					: y % 2 == 0 ? ResourceMgr.badTankU : ResourceMgr.badTankU1, x, y, null);
 			break;
 		case DOWN:
-			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? ResourceMgr.goodTankD : ResourceMgr.goodTankD1
+					: y % 2 == 0 ? ResourceMgr.badTankD : ResourceMgr.badTankD1, x, y, null);
 			break;
 		case LEFT:
-			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? ResourceMgr.goodTankL : ResourceMgr.goodTankL1
+					: x % 2 == 0 ? ResourceMgr.badTankL : ResourceMgr.badTankL1, x, y, null);
 			break;
 		case RIGHT:
-			g.drawImage(this.getGroup() == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? ResourceMgr.goodTankR : ResourceMgr.goodTankR1
+					: x % 2 == 0 ? ResourceMgr.badTankR : ResourceMgr.badTankR1, x, y, null);
 			break;
 		}
-		
+
 		tankGo();
-		
+
 		rect.x = x;
 		rect.y = y;
-		
+
 		if (r.nextInt(100) > 97 && this.getGroup() == Group.BAD) {
 			this.fire();
 		}
 		if (r.nextInt(100) > 97 && this.getGroup() == Group.BAD) {
 			this.setTankDir(Direction.values()[r.nextInt(4)]);
 		}
-		
+
 	}
 
 	public void tankGo() {
@@ -148,14 +155,14 @@ public class Tank {
 	}
 
 	public void fire() {
-			tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 2, this.tankDir, this.getGroup(), tf));
+		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 2, this.tankDir, this.getGroup(), tf, this));
 	}
 
 	public void superFire() {
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.UP, this.getGroup(), tf));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.DOWN, this.getGroup(), tf));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.LEFT, this.getGroup(), tf));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.RIGHT, this.getGroup(), tf));
+		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.UP, this.getGroup(), tf, this));
+		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.DOWN, this.getGroup(), tf, this));
+		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.LEFT, this.getGroup(), tf, this));
+		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.RIGHT, this.getGroup(), tf, this));
 	}
 
 }

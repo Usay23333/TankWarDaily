@@ -23,7 +23,7 @@ public class TankFrame extends Frame {
 
 	Tank mainTank = new Tank(470, 412, 1, Group.GOOD, this);
 	int mainTankBoom = 0;
-	
+
 	TankFrame() {
 
 		setTitle(frameTitle);
@@ -96,7 +96,7 @@ public class TankFrame extends Frame {
 	}
 
 	public void newAITanks() {
-		for (int i = 1; i <= Integer.parseInt((String)PropertyMgr.get("initCountTank")); i++) {
+		for (int i = 1; i <= Integer.parseInt((String) PropertyMgr.get("initCountTank")); i++) {
 			aiTanks.add(new Tank(80 * i, 100, 1, Group.BAD, this));
 		}
 	}
@@ -182,7 +182,6 @@ public class TankFrame extends Frame {
 	}
 
 	class TankFrameFocusListener extends WindowAdapter implements Runnable {
-
 		boolean isFirstLostFocus = true;
 
 		@Override
@@ -191,8 +190,7 @@ public class TankFrame extends Frame {
 			if (!isFirstLostFocus) {
 
 				setTitle("又好了+_+!");
-				Thread t = new Thread(this);
-				t.start();
+				new Thread(this).start();
 			}
 
 		}
