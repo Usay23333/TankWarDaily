@@ -24,17 +24,19 @@ public class Tank {
 		this.speed = speed;
 		this.group = group;
 		this.tf = tf;
-		if (group == Group.BAD) {
-			this.moving = true;
-			this.tankDir = Direction.values()[r.nextInt(4)];
-			this.tankWidth = ResourceMgr.badTankU.getWidth();
-			this.tankHeight = ResourceMgr.badTankU.getHeight();
-		}
 
 		rect.x = x;
 		rect.y = y;
-		rect.width = tankWidth = ResourceMgr.goodTankU.getWidth();
-		rect.height = tankHeight = ResourceMgr.goodTankU.getHeight();
+
+		if (group == Group.BAD) {
+			this.moving = true;
+			this.tankDir = Direction.values()[r.nextInt(4)];
+			rect.width = this.tankWidth = ResourceMgr.badTankU.getWidth();
+			rect.height = this.tankHeight = ResourceMgr.badTankU.getHeight();
+		} else {
+			rect.width = this.tankWidth = ResourceMgr.goodTankU.getWidth();
+			rect.height = this.tankHeight = ResourceMgr.goodTankU.getHeight();
+		}
 
 	}
 
@@ -127,7 +129,7 @@ public class Tank {
 		rect.x = x;
 		rect.y = y;
 
-		if (r.nextInt(100) > 97 && this.getGroup() == Group.BAD) {
+		if (r.nextInt(100) > 98 && this.getGroup() == Group.BAD) {
 			this.fire();
 		}
 		if (r.nextInt(100) > 97 && this.getGroup() == Group.BAD) {
