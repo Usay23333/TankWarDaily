@@ -20,8 +20,8 @@ public class TankFrame extends Frame {
 	ArrayList<Tank> aiTanks = new ArrayList<Tank>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Boom> booms = new ArrayList<Boom>();
-
-	Tank mainTank = new Tank(470, 412, 1, Group.GOOD, this);
+	
+	Tank mainTank1 = new Tank(470, 412, 1, Group.GOOD, this);
 	int mainTankBoom = 0;
 
 	TankFrame() {
@@ -60,10 +60,10 @@ public class TankFrame extends Frame {
 	}
 
 	public void paint(Graphics g) {
-		if (!mainTank.isLiving()) {
+		if (!mainTank1.isLiving()) {
 			Color c = g.getColor();
 			g.setColor(Color.WHITE);
-			g.drawString("被击中！ ", GAME_WIDTH - 120, 70);
+			g.drawString("被击中  " + mainTankBoom +" 次！", GAME_WIDTH - 120, 70);
 			g.setColor(c);
 		}
 
@@ -73,7 +73,7 @@ public class TankFrame extends Frame {
 		g.drawString("敌方数量：" + aiTanks.size(), 10, 70);
 		g.drawString("按 ESC 生产敌军！", GAME_WIDTH - 120, 50);
 		g.setColor(c);
-		mainTank.paint(g);
+		mainTank1.paint(g);
 
 		for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) {
 			if (!bullets.get(bulletNum).isLive()) {
@@ -148,10 +148,10 @@ public class TankFrame extends Frame {
 				dirRight = false;
 				break;
 			case KeyEvent.VK_SPACE:
-				mainTank.fire();
+				mainTank1.fire();
 				break;
 			case KeyEvent.VK_A:
-				mainTank.superFire();
+				mainTank1.superFire();
 				break;
 			case KeyEvent.VK_ESCAPE:
 				newAITanks();
@@ -162,20 +162,20 @@ public class TankFrame extends Frame {
 		}
 
 		public void changeTankDir() {
-			mainTank.setMoving(true);
+			mainTank1.setMoving(true);
 			if (!dirUp && !dirDown && !dirLeft && !dirRight)
-				mainTank.setMoving(false);
+				mainTank1.setMoving(false);
 			if (dirUp) {
-				mainTank.setTankDir(Direction.UP);
+				mainTank1.setTankDir(Direction.UP);
 			}
 			if (dirDown) {
-				mainTank.setTankDir(Direction.DOWN);
+				mainTank1.setTankDir(Direction.DOWN);
 			}
 			if (dirLeft) {
-				mainTank.setTankDir(Direction.LEFT);
+				mainTank1.setTankDir(Direction.LEFT);
 			}
 			if (dirRight) {
-				mainTank.setTankDir(Direction.RIGHT);
+				mainTank1.setTankDir(Direction.RIGHT);
 			}
 		}
 

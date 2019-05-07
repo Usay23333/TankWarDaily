@@ -120,7 +120,7 @@ public class Bullet {
 		}
 		if (!tf.bullets.isEmpty()) {
 			for (int i = 0; i < tf.bullets.size(); i++) {
-				tf.bullets.get(i).collideWith(tf.mainTank);
+				tf.bullets.get(i).collideWith(tf.mainTank1);
 			}
 		}
 
@@ -128,12 +128,15 @@ public class Bullet {
 
 	public void collideWith(Tank t) {
 		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
+			this.setLive(false);
 			t.setLiving(false);
 			if (t.getGroup() == Group.BAD) {
 				tf.aiTanks.remove(t);
-			}
-			this.setLive(false);
+			} else {
+				tf.mainTankBoom += 1;
+			}		
 			tf.booms.add(new Boom(t.getX(), t.getY(), tf));
+			
 		}
 	}
 
