@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Bullet {
+
 	private int x, y, speed;
 	private Direction bulletDir;
 	private Group group;
@@ -15,33 +16,36 @@ public class Bullet {
 
 	Rectangle rect = new Rectangle();
 
-	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, TankFrame tf,Tank t) {
+	public Bullet(Tank t, TankFrame tf) {
+
+		this.bulletDir = t.getTankDir();
+		
 		if (bulletDir == Direction.UP) {
-			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
-			this.y = y - bulletHeight;
+			this.x = t.getX() + t.getTankWidth() / 2 - bulletWidth / 2;
+			this.y = t.getY() - bulletHeight;
 		}
 		if (bulletDir == Direction.DOWN) {
-			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
-			this.y = y + t.getTankHeight();
+			this.x = t.getX() + t.getTankWidth() / 2 - bulletWidth / 2;
+			this.y = t.getY() + t.getTankHeight();
 		}
 		if (bulletDir == Direction.LEFT) {
-			this.x = x - bulletWidth;
-			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
+			this.x = t.getX() - bulletWidth;
+			this.y = t.getY() + t.getTankHeight() / 2 - bulletHeight / 2;
 		}
 		if (bulletDir == Direction.RIGHT) {
-			this.x = x + t.getTankWidth();
-			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
+			this.x = t.getX() + t.getTankWidth();
+			this.y = t.getY() + t.getTankHeight() / 2 - bulletHeight / 2;
 		}
-		this.speed = speed;
-		this.bulletDir = bulletDir;
-		this.group = group;
+		
+		this.speed = t.getSpeed();
+		this.group = t.getGroup();
 		this.tf = tf;
 
 		rect.x = x;
 		rect.y = y;
 		rect.width = bulletWidth;
 		rect.height = bulletHeight;
-
+		
 	}
 
 	public void setLive(boolean isLive) {
@@ -76,7 +80,7 @@ public class Bullet {
 		this.group = group;
 	}
 	
-	private void die() {
+	public void die() {
 		this.living = false;	
 	}
 	
@@ -141,5 +145,12 @@ public class Bullet {
 				tf.mainTankBoom += 1;
 			}		
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Bullet [x=" + x + ", y=" + y + ", speed=" + speed + ", bulletDir=" + bulletDir + ", group=" + group
+				+ ", living=" + living + ", tf=" + tf + ", rm=" + rm + ", bulletWidth=" + bulletWidth
+				+ ", bulletHeight=" + bulletHeight + ", rect=" + rect + "]";
 	}
 }

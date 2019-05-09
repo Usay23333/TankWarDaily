@@ -15,6 +15,8 @@ public class Tank {
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
+	private Fire f = new PublicFire();
+	private Fire s = new SuperFire();
 	
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
@@ -136,7 +138,7 @@ public class Tank {
 		rect.y = y;
 
 		if (r.nextInt(100) > 98 && this.getGroup() == Group.BAD) {
-			this.fire();
+			//this.fire();
 		}
 		if (r.nextInt(100) > 97 && this.getGroup() == Group.BAD) {
 			this.setTankDir(Direction.values()[r.nextInt(4)]);
@@ -163,14 +165,20 @@ public class Tank {
 	}
 
 	public void fire() {
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 2, this.tankDir, this.getGroup(), tf, this));
+		f.fire(this, this.tf);
+		System.out.println(f);
 	}
 
-	public void superFire() {
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.UP, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.DOWN, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.LEFT, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.RIGHT, this.getGroup(), tf, this));
+	public void changeFire() {
+		
+		f = s;
+		
 	}
 
+	@Override
+	public String toString() {
+		return "Tank [x=" + x + ", y=" + y + ", speed=" + speed + ", tankDir=" + tankDir + ", group=" + group
+				+ ", living=" + living + ", moving=" + moving + ", tf=" + tf + ", rm=" + rm + ", tankWidth=" + tankWidth
+				+ ", tankHeight=" + tankHeight + ", f=" + f + ", r=" + r + ", rect=" + rect + "]";
+	}
 }

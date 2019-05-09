@@ -75,6 +75,8 @@ public class TankFrame extends Frame {
 		g.drawString("子弹数量：" + bullets.size(), 10, 50);
 		g.drawString("敌方数量：" + aiTanks.size(), 10, 70);
 		g.drawString("按 ESC 生产敌军！", GAME_WIDTH - 120, 50);
+		g.drawString("按A切换火力模式！", GAME_WIDTH - 120, 90);
+		//g.drawString("当前火力模式：", GAME_WIDTH - 120, 90);
 		g.setColor(c);
 		mainTank1.paint(g);
 
@@ -154,7 +156,7 @@ public class TankFrame extends Frame {
 				mainTank1.fire();
 				break;
 			case KeyEvent.VK_A:
-				mainTank1.superFire();
+				mainTank1.changeFire();
 				break;
 			case KeyEvent.VK_ESCAPE:
 				newAITanks();
