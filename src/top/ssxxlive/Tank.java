@@ -12,6 +12,7 @@ public class Tank {
 	private boolean living = true;
 	private boolean moving = false;
 	private TankFrame tf;
+	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
 
@@ -31,11 +32,11 @@ public class Tank {
 		if (group == Group.BAD) {
 			this.moving = true;
 			this.tankDir = Direction.values()[r.nextInt(4)];
-			rect.width = this.tankWidth = ResourceMgr.badTankU.getWidth();
-			rect.height = this.tankHeight = ResourceMgr.badTankU.getHeight();
+			rect.width = this.tankWidth = rm.getBadTankU().getWidth();
+			rect.height = this.tankHeight = rm.getBadTankU().getHeight();
 		} else {
-			rect.width = this.tankWidth = ResourceMgr.goodTankU.getWidth();
-			rect.height = this.tankHeight = ResourceMgr.goodTankU.getHeight();
+			rect.width = this.tankWidth = rm.getGoodTankU().getWidth();
+			rect.height = this.tankHeight = rm.getGoodTankU().getHeight();
 		}
 
 	}
@@ -107,20 +108,20 @@ public class Tank {
 	public void paint(Graphics g) {
 		switch (tankDir) {
 		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片 第三个判断敌方两张Tank图片
-			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? ResourceMgr.goodTankU : ResourceMgr.goodTankU1
-					: y % 2 == 0 ? ResourceMgr.badTankU : ResourceMgr.badTankU1, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? rm.getGoodTankU() : rm.getGoodTankU1()
+					: y % 2 == 0 ? rm.getBadTankU() : rm.getBadTankU1(), x, y, null);
 			break;
 		case DOWN:
-			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? ResourceMgr.goodTankD : ResourceMgr.goodTankD1
-					: y % 2 == 0 ? ResourceMgr.badTankD : ResourceMgr.badTankD1, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? rm.getGoodTankD() : rm.getGoodTankD1()
+					: y % 2 == 0 ? rm.getBadTankD() : rm.getBadTankD1(), x, y, null);
 			break;
 		case LEFT:
-			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? ResourceMgr.goodTankL : ResourceMgr.goodTankL1
-					: x % 2 == 0 ? ResourceMgr.badTankL : ResourceMgr.badTankL1, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? rm.getGoodTankL() : rm.getGoodTankL1()
+					: x % 2 == 0 ? rm.getBadTankL() : rm.getBadTankL1(), x, y, null);
 			break;
 		case RIGHT:
-			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? ResourceMgr.goodTankR : ResourceMgr.goodTankR1
-					: x % 2 == 0 ? ResourceMgr.badTankR : ResourceMgr.badTankR1, x, y, null);
+			g.drawImage(this.getGroup() == Group.GOOD ? x % 2 == 0 ? rm.getGoodTankR() : rm.getGoodTankR1()
+					: x % 2 == 0 ? rm.getBadTankR() : rm.getBadTankR1(), x, y, null);
 			break;
 		}
 

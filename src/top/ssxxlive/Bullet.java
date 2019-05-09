@@ -9,8 +9,9 @@ public class Bullet {
 	private Group group;
 	private boolean living = true;
 	private TankFrame tf;
-	private static int bulletWidth = ResourceMgr.bulletU.getWidth();
-	private static int bulletHeight = ResourceMgr.bulletU.getHeight();
+	private ResourceMgr rm = ResourceMgr.getInstance();
+	private int bulletWidth = rm.getBulletU().getWidth();
+	private int bulletHeight = rm.getBulletU().getHeight();
 
 	Rectangle rect = new Rectangle();
 
@@ -78,16 +79,16 @@ public class Bullet {
 	public void paint(Graphics g) {
 		switch (bulletDir) {
 		case UP:
-			g.drawImage(ResourceMgr.bulletU, x, y, null);
+			g.drawImage(rm.getBulletU(), x, y, null);
 			break;
 		case DOWN:
-			g.drawImage(ResourceMgr.bulletD, x, y, null);
+			g.drawImage(rm.getBulletD(), x, y, null);
 			break;
 		case LEFT:
-			g.drawImage(ResourceMgr.bulletL, x, y, null);
+			g.drawImage(rm.getBulletL(), x, y, null);
 			break;
 		case RIGHT:
-			g.drawImage(ResourceMgr.bulletR, x, y, null);
+			g.drawImage(rm.getBulletR(), x, y, null);
 			break;
 		}
 		bulletGo();
