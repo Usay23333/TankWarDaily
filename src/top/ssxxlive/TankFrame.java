@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class TankFrame extends Frame {
 
@@ -16,7 +17,9 @@ public class TankFrame extends Frame {
 
 	private String frameTitle = "Tank";
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
-
+	
+	Properties pm = PropertyMgr.getInstance();
+	
 	ArrayList<Tank> aiTanks = new ArrayList<Tank>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Boom> booms = new ArrayList<Boom>();
@@ -96,7 +99,7 @@ public class TankFrame extends Frame {
 	}
 
 	public void newAITanks() {
-		for (int i = 1; i <= Integer.parseInt((String) PropertyMgr.get("initCountTank")); i++) {
+		for (int i = 1; i <= Integer.parseInt((String) pm.get("initCountTank")); i++) {
 			aiTanks.add(new Tank(80 * i, 100, 1, Group.BAD, this));
 		}
 	}
@@ -181,7 +184,7 @@ public class TankFrame extends Frame {
 
 	}
 
-	class TankFrameFocusListener extends WindowAdapter implements Runnable {
+	class TankFrameFocusListener extends WindowAdapter {
 		boolean isFirstLostFocus = true;
 
 		@Override
@@ -190,7 +193,14 @@ public class TankFrame extends Frame {
 			if (!isFirstLostFocus) {
 
 				setTitle("又好了+_+!");
-				new Thread(this).start();
+				new Thread(()->{
+					try {
+						Thread.sleep(2000);
+						setTitle(frameTitle);
+					} catch (InterruptedException i) {
+						i.printStackTrace();
+					}
+				}).start();
 			}
 
 		}
@@ -203,14 +213,6 @@ public class TankFrame extends Frame {
 
 		}
 
-		public void run() {
-			try {
-				Thread.sleep(2000);
-				setTitle(frameTitle);
-			} catch (InterruptedException i) {
-				i.printStackTrace();
-			}
-		}
 	}
 
 }

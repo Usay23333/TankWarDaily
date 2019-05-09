@@ -4,26 +4,21 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyMgr {
-	
-	static Properties prop = new Properties();
-	
+
+	private static final Properties PROP = new Properties();
+
+	private PropertyMgr() {
+	}
+
 	static {
 		try {
-			prop.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
+			PROP.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
 	}
-	
-	public static Object get(String key) {
-		if(prop == null) {
-			return null;
-		}
-		return prop.get(key);
-		
-	}
-	
-	public static void main(String[] args) {
-		
+
+	public static Properties getInstance() {
+		return PROP;
 	}
 }
