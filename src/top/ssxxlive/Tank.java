@@ -15,7 +15,7 @@ public class Tank {
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
-
+	
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 
@@ -105,6 +105,11 @@ public class Tank {
 		return tankHeight;
 	}
 
+	public void die() {
+		this.living = false;
+		tf.booms.add(new Boom(x, y, tf));
+	}
+	
 	public void paint(Graphics g) {
 		switch (tankDir) {
 		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片 第三个判断敌方两张Tank图片

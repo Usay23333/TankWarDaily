@@ -75,7 +75,11 @@ public class Bullet {
 	public void setGroup(Group group) {
 		this.group = group;
 	}
-
+	
+	private void die() {
+		this.living = false;	
+	}
+	
 	public void paint(Graphics g) {
 		switch (bulletDir) {
 		case UP:
@@ -129,16 +133,13 @@ public class Bullet {
 
 	public void collideWith(Tank t) {
 		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
-			this.setLive(false);
-			t.setLiving(false);
+			this.die();
+			t.die();
 			if (t.getGroup() == Group.BAD) {
 				tf.aiTanks.remove(t);
 			} else {
 				tf.mainTankBoom += 1;
 			}		
-			tf.booms.add(new Boom(t.getX(), t.getY(), tf));
-			
 		}
 	}
-
 }
