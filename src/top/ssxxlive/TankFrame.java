@@ -63,18 +63,17 @@ public class TankFrame extends Frame {
 	}
 
 	public void paint(Graphics g) {
-		if (!mainTank1.isLiving()) {
-			Color c = g.getColor();
-			g.setColor(Color.WHITE);
-			g.drawString("被击中  " + mainTankBoom +" 次！", GAME_WIDTH - 120, 70);
-			g.setColor(c);
-		}
+
 
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
 		g.drawString("子弹数量：" + bullets.size(), 10, 50);
 		g.drawString("敌方数量：" + aiTanks.size(), 10, 70);
-		g.drawString("按 ESC 生产敌军！", GAME_WIDTH - 120, 50);
+		g.drawString("被击中  " + mainTankBoom +" 次！", 10, 90);
+		g.drawString("按 ESC 生产敌军！", GAME_WIDTH - 180, 50);
+		g.drawString("当前火力模式：" + mainTank1.fireMode.get(mainTank1.getTankFire()), GAME_WIDTH - 180, 70);
+		g.drawString("按 A 切换火力模式！", GAME_WIDTH - 180, 90);
+
 		g.setColor(c);
 		mainTank1.paint(g);
 

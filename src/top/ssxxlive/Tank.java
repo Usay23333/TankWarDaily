@@ -2,6 +2,8 @@ package top.ssxxlive;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Tank {
@@ -15,8 +17,13 @@ public class Tank {
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
-	private FireStrategy tankFire = new DefaultFire();
-	
+	private int fireLevel = 0;
+	FireStrategy[] fs = {rm.getDefaultFire(), rm.getFourDirFire(), rm.getSuperFire()};
+
+	Map<FireStrategy,String> fireMode = new HashMap<FireStrategy,String>();
+
+	private FireStrategy tankFire = fs[fireLevel];
+
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 
@@ -39,6 +46,10 @@ public class Tank {
 			rect.width = this.tankWidth = rm.getGoodTankU().getWidth();
 			rect.height = this.tankHeight = rm.getGoodTankU().getHeight();
 		}
+
+		fireMode.put(fs[0],"普通火力");
+		fireMode.put(fs[1],"四射火力");
+		fireMode.put(fs[2],"超级火力");
 
 	}
 
@@ -110,6 +121,10 @@ public class Tank {
 		return this.tf;
 	}
 
+	public FireStrategy getTankFire() {
+		return tankFire;
+	}
+
 	public void die() {
 		this.living = false;
 		tf.booms.add(new Boom(x, y, tf));
@@ -173,7 +188,12 @@ public class Tank {
 
 	public void changeFire() {
 		//tankFire = new FourDirFire();
-		tankFire = new SuperFire();
+		//tankFire = new SuperFire();
+		if (fireLevel < 2) {
+			tankFire = fs[fireLevel += 1];
+		} else {
+			tankFire = fs[fireLevel = 0];
+		}
 	}
 
 }

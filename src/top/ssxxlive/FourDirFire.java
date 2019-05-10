@@ -7,7 +7,7 @@ public class FourDirFire implements FireStrategy {
         Direction[] dirs = Direction.values();
 
         for (Direction dir : dirs) {
-            new Bullet(tank.getX(), tank.getY(), tank.getSpeed() * 2, dir, tank.getGroup(), tank.getTankFrame(), tank);
+            new Bullet(tank.getX(), tank.getY(), tank.getSpeed() * 4, dir, tank.getGroup(), tank.getTankFrame(), tank);
         }
     }
 }

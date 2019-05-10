@@ -127,6 +127,9 @@ public class Bullet {
 		if (!tf.bullets.isEmpty()) {
 			for (int i = 0; i < tf.bullets.size(); i++) {
 				tf.bullets.get(i).collideWith(tf.mainTank1);
+				for (int j = 0; j < tf.bullets.size(); j++) {
+					tf.bullets.get(i).collideWith(tf.bullets.get(j));
+				}
 			}
 		}
 
@@ -141,6 +144,15 @@ public class Bullet {
 			} else {
 				tf.mainTankBoom += 1;
 			}		
+		}
+	}
+
+	public void collideWith(Bullet b) {
+		if (this.rect.intersects(b.rect) && this.getGroup() != b.getGroup()) {
+			this.die();
+			b.die();
+			tf.bullets.remove(this);
+			tf.bullets.remove(b);
 		}
 	}
 }
