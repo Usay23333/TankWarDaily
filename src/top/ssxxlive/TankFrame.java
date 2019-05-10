@@ -154,7 +154,7 @@ public class TankFrame extends Frame {
 				mainTank1.fire();
 				break;
 			case KeyEvent.VK_A:
-				mainTank1.superFire();
+				mainTank1.changeFire();
 				break;
 			case KeyEvent.VK_ESCAPE:
 				newAITanks();

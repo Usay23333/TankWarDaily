@@ -36,6 +36,7 @@ public class Bullet {
 		this.bulletDir = bulletDir;
 		this.group = group;
 		this.tf = tf;
+		this.tf.bullets.add(this);
 
 		rect.x = x;
 		rect.y = y;

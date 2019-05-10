@@ -17,7 +17,7 @@ class ImageTest {
 	void test() {
 		//fail("Not yet implemented");
 		try {
-			BufferedImage tankU = ImageIO.read(new File("resource/image/GoodTank/1Player/1/U1.png"));
+			BufferedImage tankU = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("resource/image/GoodTank/1Player/1/U1.png"));
 			assertNotNull(tankU);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

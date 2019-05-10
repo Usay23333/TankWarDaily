@@ -15,6 +15,7 @@ public class Tank {
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
+	private FireStrategy tankFire = new DefaultFire();
 	
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
@@ -105,6 +106,10 @@ public class Tank {
 		return tankHeight;
 	}
 
+	public TankFrame getTankFrame() {
+		return this.tf;
+	}
+
 	public void die() {
 		this.living = false;
 		tf.booms.add(new Boom(x, y, tf));
@@ -163,14 +168,12 @@ public class Tank {
 	}
 
 	public void fire() {
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 2, this.tankDir, this.getGroup(), tf, this));
+		tankFire.fire(this);
 	}
 
-	public void superFire() {
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.UP, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.DOWN, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.LEFT, this.getGroup(), tf, this));
-		tf.bullets.add(new Bullet(this.x, this.y, this.getSpeed() * 4, Direction.RIGHT, this.getGroup(), tf, this));
+	public void changeFire() {
+		//tankFire = new FourDirFire();
+		tankFire = new SuperFire();
 	}
 
 }
