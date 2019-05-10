@@ -179,7 +179,15 @@ public class Tank {
 		if (tankDir == Direction.RIGHT && x <= tf.getWidth() - tankWidth - tf.getInsets().right) {
 			x += speed;
 		}
+		for (Tank t : tf.aiTanks) {
+			this.collideWith(t);
+		}
+	}
 
+	public void collideWith(Tank t) {
+		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
+			Direction d = this.getTankDir();
+		}
 	}
 
 	public void fire() {

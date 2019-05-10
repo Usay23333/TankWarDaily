@@ -139,7 +139,7 @@ public class Bullet {
 		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
 			this.die();
 			t.die();
-			if (t.getGroup() == Group.BAD) {
+			if (t.getGroup() != Group.GOOD) {
 				tf.aiTanks.remove(t);
 			} else {
 				tf.mainTankBoom += 1;
