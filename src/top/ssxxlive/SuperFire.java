@@ -6,11 +6,14 @@ public class SuperFire implements FireStrategy {
 
     @Override
     public void fire(Tank tank) {
-
-        Iterator<Tank> i = tank.getTankFrame().aiTanks.iterator();
+        GameObject o;
+        Iterator<GameObject> i = tank.getGm().objects.iterator();
         while (i.hasNext()) {
-            i.next().die();
-            i.remove();
+            if((o = i.next()) instanceof Tank) {
+                //TODO 此处遗留Bug
+                //o.die();
+                i.remove();
+            }
         }
 
     }

@@ -2,22 +2,26 @@ package top.ssxxlive;
 
 import java.awt.Graphics;
 
-public class Boom {
+public class Boom extends GameObject {
 	private int x,y;
 	private int boomStep = 0;
-	private TankFrame tf;
+	private GameModel gm;
 	private ResourceMgr rm = ResourceMgr.getInstance();
-	Boom(int x, int y, TankFrame tf){
+	Boom(int x, int y, GameModel gm){
 		this.x = x;
 		this.y = y;
-		this.tf = tf;
+		this.gm = gm;
 	}
 	
 	public void paint(Graphics g) {
 			g.drawImage(rm.getBooms()[boomStep++], x, y, null);
 			if (boomStep >= 16) {
-				tf.booms.remove(this);
+				gm.objects.remove(this);
 			}
 	}
-	
+
+	@Override
+	public void die() {
+		//boomStep = 16;
+	}
 }

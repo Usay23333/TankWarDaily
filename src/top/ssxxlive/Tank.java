@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject {
 
 	private int x, y, speed;
 	private Direction tankDir = Direction.UP;
 	private Group group;
 	private boolean living = true;
 	private boolean moving = false;
-	private TankFrame tf;
+	private GameModel gm;
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
@@ -27,12 +27,12 @@ public class Tank {
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 
-	Tank(int x, int y, int speed, Group group, TankFrame tf) {
+	Tank(int x, int y, int speed, Group group, GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
 		this.group = group;
-		this.tf = tf;
+		this.gm = gm;
 
 		rect.x = x;
 		rect.y = y;
@@ -117,8 +117,8 @@ public class Tank {
 		return tankHeight;
 	}
 
-	public TankFrame getTankFrame() {
-		return this.tf;
+	public GameModel getGm() {
+		return gm;
 	}
 
 	public FireStrategy getTankFire() {
@@ -127,7 +127,7 @@ public class Tank {
 
 	public void die() {
 		this.living = false;
-		tf.booms.add(new Boom(x, y, tf));
+		gm.objects.add(new Boom(x, y, gm));
 	}
 	
 	public void paint(Graphics g) {
@@ -167,27 +167,19 @@ public class Tank {
 	public void tankGo() {
 		if (!moving)
 			return;
-		if (tankDir == Direction.UP && y > tf.getInsets().top) {
+		if (tankDir == Direction.UP && y > gm.getGameTopStart()) {
 			y -= speed;
 		}
-		if (tankDir == Direction.DOWN && y <= tf.getHeight() - tankHeight - tf.getInsets().bottom) {
+		if (tankDir == Direction.DOWN && y <= gm.getGameDownStart() - tankHeight) {
 			y += speed;
 		}
-		if (tankDir == Direction.LEFT && x > tf.getInsets().left) {
+		if (tankDir == Direction.LEFT && x > gm.getGameLeftStart()) {
 			x -= speed;
 		}
-		if (tankDir == Direction.RIGHT && x <= tf.getWidth() - tankWidth - tf.getInsets().right) {
+		if (tankDir == Direction.RIGHT && x <= gm.getGameRightStart() - tankWidth) {
 			x += speed;
 		}
-		for (Tank t : tf.aiTanks) {
-			this.collideWith(t);
-		}
-	}
 
-	public void collideWith(Tank t) {
-		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
-			Direction d = this.getTankDir();
-		}
 	}
 
 	public void fire() {

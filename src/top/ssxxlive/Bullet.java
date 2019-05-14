@@ -3,19 +3,19 @@ package top.ssxxlive;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Bullet {
+public class Bullet extends GameObject {
 	private int x, y, speed;
 	private Direction bulletDir;
 	private Group group;
 	private boolean living = true;
-	private TankFrame tf;
+	private GameModel gm;
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int bulletWidth = rm.getBulletU().getWidth();
 	private int bulletHeight = rm.getBulletU().getHeight();
 
 	Rectangle rect = new Rectangle();
 
-	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, TankFrame tf,Tank t) {
+	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, GameModel gm,Tank t) {
 		if (bulletDir == Direction.UP) {
 			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
 			this.y = y - bulletHeight;
@@ -35,8 +35,8 @@ public class Bullet {
 		this.speed = speed;
 		this.bulletDir = bulletDir;
 		this.group = group;
-		this.tf = tf;
-		this.tf.bullets.add(this);
+		this.gm = gm;
+		this.gm.objects.add(this);
 
 		rect.x = x;
 		rect.y = y;
@@ -77,8 +77,9 @@ public class Bullet {
 		this.group = group;
 	}
 	
-	private void die() {
-		this.living = false;	
+	public void die() {
+		this.living = false;
+		gm.remove(this);
 	}
 	
 	public void paint(Graphics g) {
@@ -117,21 +118,8 @@ public class Bullet {
 			x += speed;
 		}
 
-		if (x < 0 || y < 0 || x > tf.getWidth() || y > tf.getHeight())
-			setLive(false);
-		if (!tf.aiTanks.isEmpty()) {
-			for (int i = 0; i < tf.aiTanks.size(); i++) {
-				this.collideWith(tf.aiTanks.get(i));
-			}
-		}
-		if (!tf.bullets.isEmpty()) {
-			for (int i = 0; i < tf.bullets.size(); i++) {
-				tf.bullets.get(i).collideWith(tf.mainTank1);
-				for (int j = 0; j < tf.bullets.size(); j++) {
-					tf.bullets.get(i).collideWith(tf.bullets.get(j));
-				}
-			}
-		}
+		if (x < 0 || y < 0 || x > gm.getGameRightStart() || y > gm.getGameDownStart())
+			die();
 
 	}
 
@@ -140,9 +128,9 @@ public class Bullet {
 			this.die();
 			t.die();
 			if (t.getGroup() != Group.GOOD) {
-				tf.aiTanks.remove(t);
+				gm.objects.remove(t);
 			} else {
-				tf.mainTankBoom += 1;
+				//mainTankBoom += 1;
 			}		
 		}
 	}
@@ -151,8 +139,8 @@ public class Bullet {
 		if (this.rect.intersects(b.rect) && this.getGroup() != b.getGroup()) {
 			this.die();
 			b.die();
-			tf.bullets.remove(this);
-			tf.bullets.remove(b);
+			gm.objects.remove(this);
+			gm.objects.remove(b);
 		}
 	}
 }

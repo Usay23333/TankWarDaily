@@ -14,18 +14,11 @@ import java.util.Properties;
 public class TankFrame extends Frame {
 
 	private static final long serialVersionUID = 1L;
-
 	private String frameTitle = "Tank";
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
 	
-	Properties pm = PropertyMgr.getInstance();
-	
-	ArrayList<Tank> aiTanks = new ArrayList<Tank>();
-	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	ArrayList<Boom> booms = new ArrayList<Boom>();
-	
-	Tank mainTank1 = new Tank(470, 412, 1, Group.GOOD, this);
-	int mainTankBoom = 0;
+	private Properties pm = PropertyMgr.getInstance();
+	private GameModel gm = new GameModel();
 
 	TankFrame() {
 
@@ -43,7 +36,11 @@ public class TankFrame extends Frame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		newAITanks();
+
+		gm.setGameTopStart(getInsets().top);
+		gm.setGameDownStart(GAME_HEIGHT - getInsets().bottom);
+		gm.setGameLeftStart(getInsets().left);
+		gm.setGameRightStart(GAME_WIDTH - getInsets().right);
 	}
 
 	Image offScreenImage = null;
@@ -64,43 +61,8 @@ public class TankFrame extends Frame {
 
 	public void paint(Graphics g) {
 
+		gm.paint(g);
 
-		Color c = g.getColor();
-		g.setColor(Color.WHITE);
-		g.drawString("子弹数量：" + bullets.size(), 10, 50);
-		g.drawString("敌方数量：" + aiTanks.size(), 10, 70);
-		g.drawString("被击中  " + mainTankBoom +" 次！", 10, 90);
-		g.drawString("按 ESC 生产敌军！", GAME_WIDTH - 180, 50);
-		g.drawString("当前火力模式：" + mainTank1.fireMode.get(mainTank1.getTankFire()), GAME_WIDTH - 180, 70);
-		g.drawString("按 A 切换火力模式！", GAME_WIDTH - 180, 90);
-
-		g.setColor(c);
-		mainTank1.paint(g);
-
-		for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) {
-			if (!bullets.get(bulletNum).isLive()) {
-				bullets.remove(bulletNum);
-			}
-		}
-
-		for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) {
-			bullets.get(bulletNum).paint(g);
-		}
-
-		for (int AITankNum = 0; AITankNum < aiTanks.size(); AITankNum++) {
-			aiTanks.get(AITankNum).paint(g);
-		}
-
-		for (int i = 0; i < booms.size(); i++) {
-			booms.get(i).paint(g);
-		}
-
-	}
-
-	public void newAITanks() {
-		for (int i = 1; i <= Integer.parseInt((String) pm.get("initCountTank")); i++) {
-			aiTanks.add(new Tank(80 * i, 100, 1, Group.BAD, this));
-		}
 	}
 
 	class TankFrameKeyListener extends KeyAdapter {
@@ -113,6 +75,7 @@ public class TankFrame extends Frame {
 		public void keyPressed(KeyEvent p) {
 
 			int keyCode = p.getKeyCode();
+
 			switch (keyCode) {
 			case KeyEvent.VK_UP:
 				dirUp = true;
@@ -150,13 +113,13 @@ public class TankFrame extends Frame {
 				dirRight = false;
 				break;
 			case KeyEvent.VK_SPACE:
-				mainTank1.fire();
+				gm.mainTank1.fire();
 				break;
 			case KeyEvent.VK_A:
-				mainTank1.changeFire();
+				gm.mainTank1.changeFire();
 				break;
 			case KeyEvent.VK_ESCAPE:
-				newAITanks();
+				gm.newAITanks();
 			}
 
 			changeTankDir();
@@ -164,20 +127,20 @@ public class TankFrame extends Frame {
 		}
 
 		public void changeTankDir() {
-			mainTank1.setMoving(true);
+			gm.mainTank1.setMoving(true);
 			if (!dirUp && !dirDown && !dirLeft && !dirRight)
-				mainTank1.setMoving(false);
+				gm.mainTank1.setMoving(false);
 			if (dirUp) {
-				mainTank1.setTankDir(Direction.UP);
+				gm.mainTank1.setTankDir(Direction.UP);
 			}
 			if (dirDown) {
-				mainTank1.setTankDir(Direction.DOWN);
+				gm.mainTank1.setTankDir(Direction.DOWN);
 			}
 			if (dirLeft) {
-				mainTank1.setTankDir(Direction.LEFT);
+				gm.mainTank1.setTankDir(Direction.LEFT);
 			}
 			if (dirRight) {
-				mainTank1.setTankDir(Direction.RIGHT);
+				gm.mainTank1.setTankDir(Direction.RIGHT);
 			}
 		}
 
