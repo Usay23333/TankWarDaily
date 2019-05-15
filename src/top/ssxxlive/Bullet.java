@@ -127,25 +127,4 @@ public class Bullet extends GameObject {
 
 	}
 
-	public void collideWith(Tank t) {
-		if (this.rect.intersects(t.rect) && this.getGroup() != t.getGroup()) {
-			this.die();
-			t.die();
-			if (t.getGroup() != Group.GOOD) {
-				gm.objects.remove(t);
-			} else {
-				//mainTankBoom += 1;
-			}		
-		}
-	}
-
-	public void collideWith(Bullet b) {
-		if (this.rect.intersects(b.rect) && this.getGroup() != b.getGroup()) {
-			this.die();
-			b.die();
-			gm.objects.remove(this);
-			gm.objects.remove(b);
-		}
-	}
-
 }
