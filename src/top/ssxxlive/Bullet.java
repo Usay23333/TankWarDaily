@@ -45,11 +45,11 @@ public class Bullet extends GameObject {
 
 	}
 
-	public void setLive(boolean isLive) {
-		this.living = isLive;
+	public void setLiving(boolean isLiving) {
+		this.living = isLiving;
 	}
 
-	public boolean isLive() {
+	public boolean isLiving() {
 		return this.living;
 	}
 
@@ -76,13 +76,17 @@ public class Bullet extends GameObject {
 	public void setGroup(Group group) {
 		this.group = group;
 	}
-	
+
+	public Rectangle getRect() {
+		return rect;
+	}
+
 	public void die() {
 		this.living = false;
-		gm.remove(this);
 	}
 	
 	public void paint(Graphics g) {
+		if (!isLiving()) gm.remove(this);
 		switch (bulletDir) {
 		case UP:
 			g.drawImage(rm.getBulletU(), x, y, null);
@@ -143,4 +147,5 @@ public class Bullet extends GameObject {
 			gm.objects.remove(b);
 		}
 	}
+
 }

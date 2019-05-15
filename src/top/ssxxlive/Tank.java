@@ -125,12 +125,17 @@ public class Tank extends GameObject {
 		return tankFire;
 	}
 
+	public Rectangle getRect() {
+		return rect;
+	}
+
 	public void die() {
 		this.living = false;
 		gm.objects.add(new Boom(x, y, gm));
 	}
 	
 	public void paint(Graphics g) {
+		if (!isLiving()) gm.remove(this);
 		switch (tankDir) {
 		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片 第三个判断敌方两张Tank图片
 			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? rm.getGoodTankU() : rm.getGoodTankU1()
@@ -165,8 +170,7 @@ public class Tank extends GameObject {
 	}
 
 	public void tankGo() {
-		if (!moving)
-			return;
+		if (!moving) return;
 		if (tankDir == Direction.UP && y > gm.getGameTopStart()) {
 			y -= speed;
 		}

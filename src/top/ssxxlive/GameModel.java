@@ -1,5 +1,7 @@
 package top.ssxxlive;
 
+import top.ssxxlive.cor.CollideChain;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -7,6 +9,7 @@ import java.util.Properties;
 public class GameModel {
 
     Properties pm = PropertyMgr.getInstance();
+    CollideChain cc = new CollideChain();
 
     private int gameTopStart, gameDownStart, gameLeftStart, gameRightStart;
     private int mainTankBoom = 0;
@@ -98,5 +101,12 @@ public class GameModel {
         for (int i = 0; i < objects.size(); i++) {
             objects.get(i).paint(g);
         }
+
+        for (int i = 0; i < objects.size(); i++) {
+            for (int j = i + 1; j < objects.size(); j++) {
+                cc.collide(objects.get(i), objects.get(j));
+            }
+        }
     }
+
 }

@@ -1,6 +1,6 @@
 package top.ssxxlive;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public class Boom extends GameObject {
 	private int x,y;
@@ -20,8 +20,4 @@ public class Boom extends GameObject {
 			}
 	}
 
-	@Override
-	public void die() {
-		//boomStep = 16;
-	}
 }
