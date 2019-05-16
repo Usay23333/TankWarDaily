@@ -8,14 +8,13 @@ public class Bullet extends GameObject {
 	private Direction bulletDir;
 	private Group group;
 	private boolean living = true;
-	private GameModel gm;
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int bulletWidth = rm.getBulletU().getWidth();
 	private int bulletHeight = rm.getBulletU().getHeight();
 
 	Rectangle rect = new Rectangle();
 
-	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, GameModel gm,Tank t) {
+	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, Tank t) {
 		if (bulletDir == Direction.UP) {
 			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
 			this.y = y - bulletHeight;
@@ -35,8 +34,8 @@ public class Bullet extends GameObject {
 		this.speed = speed;
 		this.bulletDir = bulletDir;
 		this.group = group;
-		this.gm = gm;
-		this.gm.objects.add(this);
+
+		GameModel.getInstance().add(this);
 
 		rect.x = x;
 		rect.y = y;
@@ -86,7 +85,7 @@ public class Bullet extends GameObject {
 	}
 	
 	public void paint(Graphics g) {
-		if (!isLiving()) gm.remove(this);
+		if (!isLiving()) GameModel.getInstance().remove(this);
 		switch (bulletDir) {
 		case UP:
 			g.drawImage(rm.getBulletU(), x, y, null);
@@ -122,7 +121,7 @@ public class Bullet extends GameObject {
 			x += speed;
 		}
 
-		if (x < 0 || y < 0 || x > gm.getGameRightStart() || y > gm.getGameDownStart())
+		if (x < 0 || y < 0 || x > GameModel.getInstance().getGameRightStart() || y > GameModel.getInstance().getGameDownStart())
 			die();
 	}
 

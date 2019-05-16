@@ -13,7 +13,6 @@ public class Tank extends GameObject {
 	private Group group;
 	private boolean living = true;
 	private boolean moving = false;
-	private GameModel gm;
 	private ResourceMgr rm = ResourceMgr.getInstance();
 	private int tankWidth;
 	private int tankHeight;
@@ -27,12 +26,11 @@ public class Tank extends GameObject {
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 
-	Tank(int x, int y, int speed, Group group, GameModel gm) {
+	Tank(int x, int y, int speed, Group group) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
 		this.group = group;
-		this.gm = gm;
 
 		rect.x = x;
 		rect.y = y;
@@ -117,10 +115,6 @@ public class Tank extends GameObject {
 		return tankHeight;
 	}
 
-	public GameModel getGm() {
-		return gm;
-	}
-
 	public FireStrategy getTankFire() {
 		return tankFire;
 	}
@@ -131,11 +125,11 @@ public class Tank extends GameObject {
 
 	public void die() {
 		this.living = false;
-		gm.objects.add(new Boom(x, y, gm));
+		GameModel.getInstance().add(new Boom(x, y));
 	}
 	
 	public void paint(Graphics g) {
-		if (!isLiving()) gm.remove(this);
+		if (!isLiving()) GameModel.getInstance().remove(this);
 		switch (tankDir) {
 		case UP: // 第一个三元运算判断敌我坦克 第二个判断我方两张Tank图片 第三个判断敌方两张Tank图片
 			g.drawImage(this.getGroup() == Group.GOOD ? y % 2 == 0 ? rm.getGoodTankU() : rm.getGoodTankU1()
@@ -171,16 +165,16 @@ public class Tank extends GameObject {
 
 	public void tankGo() {
 		if (!moving) return;
-		if (tankDir == Direction.UP && y > gm.getGameTopStart()) {
+		if (tankDir == Direction.UP && y > GameModel.getInstance().getGameTopStart()) {
 			y -= speed;
 		}
-		if (tankDir == Direction.DOWN && y <= gm.getGameDownStart() - tankHeight) {
+		if (tankDir == Direction.DOWN && y <= GameModel.getInstance().getGameDownStart() - tankHeight) {
 			y += speed;
 		}
-		if (tankDir == Direction.LEFT && x > gm.getGameLeftStart()) {
+		if (tankDir == Direction.LEFT && x > GameModel.getInstance().getGameLeftStart()) {
 			x -= speed;
 		}
-		if (tankDir == Direction.RIGHT && x <= gm.getGameRightStart() - tankWidth) {
+		if (tankDir == Direction.RIGHT && x <= GameModel.getInstance().getGameRightStart() - tankWidth) {
 			x += speed;
 		}
 

@@ -18,7 +18,6 @@ public class TankFrame extends Frame {
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
 	
 	private Properties pm = PropertyMgr.getInstance();
-	private GameModel gm = new GameModel();
 
 	TankFrame() {
 
@@ -37,10 +36,10 @@ public class TankFrame extends Frame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 
-		gm.setGameTopStart(getInsets().top);
-		gm.setGameDownStart(GAME_HEIGHT - getInsets().bottom);
-		gm.setGameLeftStart(getInsets().left);
-		gm.setGameRightStart(GAME_WIDTH - getInsets().right);
+		GameModel.getInstance().setGameTopStart(getInsets().top);
+		GameModel.getInstance().setGameDownStart(GAME_HEIGHT - getInsets().bottom);
+		GameModel.getInstance().setGameLeftStart(getInsets().left);
+		GameModel.getInstance().setGameRightStart(GAME_WIDTH - getInsets().right);
 	}
 
 	Image offScreenImage = null;
@@ -61,7 +60,7 @@ public class TankFrame extends Frame {
 
 	public void paint(Graphics g) {
 
-		gm.paint(g);
+		GameModel.getInstance().paint(g);
 
 	}
 
@@ -113,13 +112,13 @@ public class TankFrame extends Frame {
 				dirRight = false;
 				break;
 			case KeyEvent.VK_SPACE:
-				gm.mainTank1.fire();
+				GameModel.getInstance().mainTank1.fire();
 				break;
 			case KeyEvent.VK_A:
-				gm.mainTank1.changeFire();
+				GameModel.getInstance().mainTank1.changeFire();
 				break;
 			case KeyEvent.VK_ESCAPE:
-				gm.newAITanks();
+				GameModel.getInstance().newAITanks();
 			}
 
 			changeTankDir();
@@ -127,20 +126,20 @@ public class TankFrame extends Frame {
 		}
 
 		public void changeTankDir() {
-			gm.mainTank1.setMoving(true);
+			GameModel.getInstance().mainTank1.setMoving(true);
 			if (!dirUp && !dirDown && !dirLeft && !dirRight)
-				gm.mainTank1.setMoving(false);
+				GameModel.getInstance().mainTank1.setMoving(false);
 			if (dirUp) {
-				gm.mainTank1.setTankDir(Direction.UP);
+				GameModel.getInstance().mainTank1.setTankDir(Direction.UP);
 			}
 			if (dirDown) {
-				gm.mainTank1.setTankDir(Direction.DOWN);
+				GameModel.getInstance().mainTank1.setTankDir(Direction.DOWN);
 			}
 			if (dirLeft) {
-				gm.mainTank1.setTankDir(Direction.LEFT);
+				GameModel.getInstance().mainTank1.setTankDir(Direction.LEFT);
 			}
 			if (dirRight) {
-				gm.mainTank1.setTankDir(Direction.RIGHT);
+				GameModel.getInstance().mainTank1.setTankDir(Direction.RIGHT);
 			}
 		}
 

@@ -17,11 +17,17 @@ public class GameModel {
     private int gameTopStart, gameDownStart, gameLeftStart, gameRightStart;
     private int mainTankBoom = 0;
 
-    GameModel() {
+    private static final GameModel GM = new GameModel();
+
+    private GameModel() {
         newAITanks();
         cc.add(new TankBulletCollider())
                 .add(new BulletBulletCollider())
                 .add(new TankTankCollider());
+    }
+
+    public static GameModel getInstance() {
+        return GM;
     }
 
     public int getGameTopStart() {
@@ -56,12 +62,12 @@ public class GameModel {
         this.gameRightStart = gameRightStart;
     }
 
-    Tank mainTank1 = new Tank(470, 412, 1, Group.GOOD, this);
+    Tank mainTank1 = new Tank(470, 412, 1, Group.GOOD);
     ArrayList<GameObject> objects = new ArrayList<>();
 
     public void newAITanks() {
         for (int i = 1; i <= Integer.parseInt((String) pm.get("initCountTank")); i++) {
-            add(new Tank(80 * i, 100, 1, Group.BAD, this));
+            add(new Tank(80 * i, 100, 1, Group.BAD));
         }
     }
 
