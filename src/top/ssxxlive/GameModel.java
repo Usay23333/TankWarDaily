@@ -1,6 +1,9 @@
 package top.ssxxlive;
 
+import top.ssxxlive.cor.BulletBulletCollider;
 import top.ssxxlive.cor.CollideChain;
+import top.ssxxlive.cor.TankBulletCollider;
+import top.ssxxlive.cor.TankTankCollider;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +19,9 @@ public class GameModel {
 
     GameModel() {
         newAITanks();
+        cc.add(new TankBulletCollider())
+                .add(new BulletBulletCollider())
+                .add(new TankTankCollider());
     }
 
     public int getGameTopStart() {

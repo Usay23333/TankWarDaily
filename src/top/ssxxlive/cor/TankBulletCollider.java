@@ -14,6 +14,7 @@ public class TankBulletCollider implements Collider {
             if(t.getRect().intersects(b.getRect()) && t.getGroup() != b.getGroup()) {
                 t.die();
                 b.die();
+                return true;
             }
         } else if (o1 instanceof Bullet && o2 instanceof Tank) {
             Tank t = (Tank) o2;
