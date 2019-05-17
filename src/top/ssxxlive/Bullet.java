@@ -9,38 +9,38 @@ public class Bullet extends GameObject {
 	private Group group;
 	private boolean living = true;
 	private ResourceMgr rm = ResourceMgr.getInstance();
-	private int bulletWidth = rm.getBulletU().getWidth();
-	private int bulletHeight = rm.getBulletU().getHeight();
 
 	Rectangle rect = new Rectangle();
 
 	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, Tank t) {
+
+        rect.width = rm.getBulletU().getWidth();
+        rect.height = rm.getBulletU().getHeight();
+
 		if (bulletDir == Direction.UP) {
-			this.x = x + t.getRect().width / 2 - bulletWidth / 2;
-			this.y = y - bulletHeight;
+			this.x = x + t.getRect().width / 2 - rect.width / 2;
+			this.y = y - rect.height;
 		}
 		if (bulletDir == Direction.DOWN) {
-			this.x = x + t.getRect().width / 2 - bulletWidth / 2;
+			this.x = x + t.getRect().width / 2 - rect.width / 2;
 			this.y = y + t.getRect().height;
 		}
 		if (bulletDir == Direction.LEFT) {
-			this.x = x - bulletWidth;
-			this.y = y + t.getRect().height / 2 - bulletHeight / 2;
+			this.x = x - rect.width;
+			this.y = y + t.getRect().height / 2 - rect.height / 2;
 		}
 		if (bulletDir == Direction.RIGHT) {
 			this.x = x + t.getRect().width;
-			this.y = y + t.getRect().height / 2 - bulletHeight / 2;
+			this.y = y + t.getRect().height / 2 - rect.height / 2;
 		}
 		this.speed = speed;
 		this.bulletDir = bulletDir;
 		this.group = group;
 
-		GameModel.getInstance().add(this);
-
 		rect.x = x;
 		rect.y = y;
-		rect.width = bulletWidth;
-		rect.height = bulletHeight;
+
+        GameModel.getInstance().add(this);
 
 	}
 
@@ -100,6 +100,7 @@ public class Bullet extends GameObject {
 			g.drawImage(rm.getBulletR(), x, y, null);
 			break;
 		}
+
 		bulletGo();
 
 		rect.x = x;
