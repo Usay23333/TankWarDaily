@@ -8,16 +8,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Properties;
 
 public class TankFrame extends Frame {
 
 	private static final long serialVersionUID = 1L;
 	private String frameTitle = "Tank";
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
-	
-	private Properties pm = PropertyMgr.getInstance();
 
 	TankFrame() {
 

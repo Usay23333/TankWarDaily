@@ -2,8 +2,6 @@ package top.ssxxlive;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Tank extends GameObject {
@@ -13,20 +11,16 @@ public class Tank extends GameObject {
 	private Group group;
 	private boolean living = true;
 	private boolean moving = false;
+
 	private ResourceMgr rm = ResourceMgr.getInstance();
-	private int tankWidth;
-	private int tankHeight;
+
 	private int fireLevel = 0;
-	FireStrategy[] fs = {rm.getDefaultFire(), rm.getFourDirFire(), rm.getSuperFire()};
-
-	Map<FireStrategy,String> fireMode = new HashMap<FireStrategy,String>();
-
-	private FireStrategy tankFire = fs[fireLevel];
 
 	Random r = new Random();
 	Rectangle rect = new Rectangle();
 
 	Tank(int x, int y, int speed, Group group) {
+
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -36,18 +30,18 @@ public class Tank extends GameObject {
 		rect.y = y;
 
 		if (group == Group.BAD) {
+
 			this.moving = true;
 			this.tankDir = Direction.values()[r.nextInt(4)];
-			rect.width = this.tankWidth = rm.getBadTankU().getWidth();
-			rect.height = this.tankHeight = rm.getBadTankU().getHeight();
-		} else {
-			rect.width = this.tankWidth = rm.getGoodTankU().getWidth();
-			rect.height = this.tankHeight = rm.getGoodTankU().getHeight();
-		}
+			rect.width = rm.getBadTankU().getWidth();
+			rect.height = rm.getBadTankU().getHeight();
 
-		fireMode.put(fs[0],"普通火力");
-		fireMode.put(fs[1],"四射火力");
-		fireMode.put(fs[2],"超级火力");
+		} else {
+
+			rect.width = rm.getGoodTankU().getWidth();
+			rect.height = rm.getGoodTankU().getHeight();
+
+		}
 
 	}
 
@@ -87,10 +81,6 @@ public class Tank extends GameObject {
 		return group;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
 	public boolean isLiving() {
 		return living;
 	}
@@ -107,20 +97,12 @@ public class Tank extends GameObject {
 		this.moving = moving;
 	}
 
-	public int getTankWidth() {
-		return tankWidth;
-	}
-
-	public int getTankHeight() {
-		return tankHeight;
-	}
-
-	public FireStrategy getTankFire() {
-		return tankFire;
-	}
-
 	public Rectangle getRect() {
 		return rect;
+	}
+
+	public int getFireLevel() {
+		return fireLevel;
 	}
 
 	public void die() {
@@ -168,29 +150,27 @@ public class Tank extends GameObject {
 		if (tankDir == Direction.UP && y > GameModel.getInstance().getGameTopStart()) {
 			y -= speed;
 		}
-		if (tankDir == Direction.DOWN && y <= GameModel.getInstance().getGameDownStart() - tankHeight) {
+		if (tankDir == Direction.DOWN && y <= GameModel.getInstance().getGameDownStart() - rect.height) {
 			y += speed;
 		}
 		if (tankDir == Direction.LEFT && x > GameModel.getInstance().getGameLeftStart()) {
 			x -= speed;
 		}
-		if (tankDir == Direction.RIGHT && x <= GameModel.getInstance().getGameRightStart() - tankWidth) {
+		if (tankDir == Direction.RIGHT && x <= GameModel.getInstance().getGameRightStart() - rect.width) {
 			x += speed;
 		}
 
 	}
 
 	public void fire() {
-		tankFire.fire(this);
+		rm.getFireStrategy()[fireLevel].fire(this);
 	}
 
 	public void changeFire() {
-		//tankFire = new FourDirFire();
-		//tankFire = new SuperFire();
 		if (fireLevel < 2) {
-			tankFire = fs[fireLevel += 1];
+			fireLevel += 1;
 		} else {
-			tankFire = fs[fireLevel = 0];
+			fireLevel = 0;
 		}
 	}
 

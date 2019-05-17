@@ -7,11 +7,9 @@ import top.ssxxlive.cor.TankTankCollider;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class GameModel {
 
-    Properties pm = PropertyMgr.getInstance();
     CollideChain cc = new CollideChain();
 
     private int gameTopStart, gameDownStart, gameLeftStart, gameRightStart;
@@ -66,7 +64,7 @@ public class GameModel {
     ArrayList<GameObject> objects = new ArrayList<>();
 
     public void newAITanks() {
-        for (int i = 1; i <= Integer.parseInt((String) pm.get("initCountTank")); i++) {
+        for (int i = 1; i <= Integer.parseInt((String) PropertyMgr.getInstance().get("initCountTank")); i++) {
             add(new Tank(80 * i, 100, 1, Group.BAD));
         }
     }
@@ -104,7 +102,8 @@ public class GameModel {
         g.drawString("敌方数量：" + getBadTankAmount(), 20, 70);
         g.drawString("被击中 " + mainTankBoom +" 次！", 20, 90);
         g.drawString("按 ESC 生产敌军！", gameRightStart - 160, 50);
-        g.drawString("当前火力模式：" + mainTank1.fireMode.get(mainTank1.getTankFire()), gameRightStart - 160, 70);
+        g.drawString("当前火力模式：" + ResourceMgr.getInstance().getFireText(mainTank1.getFireLevel())
+                , gameRightStart - 160, 70);
         g.drawString("按 A 切换火力模式！", gameRightStart - 160, 90);
 
         g.setColor(c);

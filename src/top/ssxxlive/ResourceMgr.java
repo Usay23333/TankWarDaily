@@ -2,7 +2,8 @@ package top.ssxxlive;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -14,9 +15,9 @@ public class ResourceMgr {
 	private static BufferedImage badTankU1, badTankD1, badTankL1, badTankR1;
 	private static BufferedImage bulletU, bulletD, bulletL, bulletR;
 	private static BufferedImage[] booms = new BufferedImage[16];
-	private static FireStrategy defaultFire;
-	private static FireStrategy fourDirFire;
-	private static FireStrategy superFire;
+	private static FireStrategy[] fs = {new DefaultFire(), new FourDirFire(), new SuperFire()};
+	private Map<FireStrategy,String> fireText;
+
 
 	private ResourceMgr() {
 		try {
@@ -45,28 +46,15 @@ public class ResourceMgr {
 			bulletL = ImageUtil.rotateImage(bulletU, -90);
 			bulletR = ImageUtil.rotateImage(bulletU, 90);
 
-
-			try {
-				defaultFire = (FireStrategy) Class.forName((String)PropertyMgr.getInstance().get("defaultFire")).getDeclaredConstructor().newInstance();
-				fourDirFire = (FireStrategy) Class.forName((String)PropertyMgr.getInstance().get("fourDirFire")).getDeclaredConstructor().newInstance();
-				superFire = (FireStrategy) Class.forName((String)PropertyMgr.getInstance().get("superFire")).getDeclaredConstructor().newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
 			for (int i = 0; i < booms.length; i++) {
 				booms[i] = ImageIO
 						.read(ResourceMgr.class.getClassLoader().getResourceAsStream("resource/images/e" + (i + 1) + ".gif"));
 			}
 
+			fireText = new HashMap<FireStrategy,String>();
+			fireText.put(fs[0],"普通火力");
+			fireText.put(fs[1],"四射火力");
+			fireText.put(fs[2],"超级火力");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -135,14 +123,11 @@ public class ResourceMgr {
 	public BufferedImage[] getBooms() {
 		return booms;
 	}
-	public FireStrategy getSuperFire() {
-		return superFire;
+	public FireStrategy[] getFireStrategy() {
+		return fs;
 	}
-	public FireStrategy getFourDirFire() {
-		return fourDirFire;
-	}
-	public FireStrategy getDefaultFire() {
-		return defaultFire;
+	public String getFireText(int fireLevel) {
+		return fireText.get(fs[fireLevel]);
 	}
 
 	private static class ResourceInner {

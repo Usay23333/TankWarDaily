@@ -16,20 +16,20 @@ public class Bullet extends GameObject {
 
 	public Bullet(int x, int y, int speed, Direction bulletDir, Group group, Tank t) {
 		if (bulletDir == Direction.UP) {
-			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
+			this.x = x + t.getRect().width / 2 - bulletWidth / 2;
 			this.y = y - bulletHeight;
 		}
 		if (bulletDir == Direction.DOWN) {
-			this.x = x + t.getTankWidth() / 2 - bulletWidth / 2;
-			this.y = y + t.getTankHeight();
+			this.x = x + t.getRect().width / 2 - bulletWidth / 2;
+			this.y = y + t.getRect().height;
 		}
 		if (bulletDir == Direction.LEFT) {
 			this.x = x - bulletWidth;
-			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
+			this.y = y + t.getRect().height / 2 - bulletHeight / 2;
 		}
 		if (bulletDir == Direction.RIGHT) {
-			this.x = x + t.getTankWidth();
-			this.y = y + t.getTankHeight() / 2 - bulletHeight / 2;
+			this.x = x + t.getRect().width;
+			this.y = y + t.getRect().height / 2 - bulletHeight / 2;
 		}
 		this.speed = speed;
 		this.bulletDir = bulletDir;
