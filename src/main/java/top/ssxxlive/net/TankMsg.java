@@ -1,0 +1,17 @@
+package top.ssxxlive.net;
+
+public class TankMsg {
+	public int x;
+	public int y;
+	
+	public TankMsg(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	@Override
+	public String toString() {
+		return "TankMsg [x=" + x + ", y=" + y + "]";
+	}
+	
+}
