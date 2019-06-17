@@ -91,7 +91,7 @@ class ClientChannelHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		//ctx.writeAndFlush(Unpooled.copiedBuffer("hello".getBytes()));
-		ctx.writeAndFlush(new TankJoinMsg(345, 2));
+		//ctx.writeAndFlush(new TankJoinMsg(345, 2));
 	}
 
 	@Override

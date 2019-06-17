@@ -8,8 +8,6 @@ public class TankJoinMsgEncoder extends MessageToByteEncoder<TankJoinMsg>{
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, TankJoinMsg msg, ByteBuf out) throws Exception {
-		out.writeInt(msg.x);
-		out.writeInt(msg.y);
 		
 	}
 	
