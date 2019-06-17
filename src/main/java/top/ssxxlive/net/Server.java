@@ -1,7 +1,6 @@
 package top.ssxxlive.net;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -30,8 +29,8 @@ public class Server {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()
-						.addLast(new TankMsgDecoder())
-						.addLast(new TankMsgEncoder())
+						.addLast(new TankJoinMsgDecoder())
+						.addLast(new TankJoinMsgEncoder())
 						.addLast(new ServerChildHandler());
 					}
 				})

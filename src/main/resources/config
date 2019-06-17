@@ -1,0 +1,5 @@
+#TankWar
+initCountTank=5
+defaultFire=top.ssxxlive.DefaultFire
+fourDirFire=top.ssxxlive.FourDirFire
+superFire=top.ssxxlive.SuperFire

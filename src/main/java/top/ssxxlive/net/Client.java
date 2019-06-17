@@ -1,7 +1,6 @@
 package top.ssxxlive.net;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -31,8 +30,8 @@ public class Client {
 				.handler(new ChannelInitializer<SocketChannel>() {
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ch.pipeline()
-						.addLast(new TankMsgDecoder())
-						.addLast(new TankMsgEncoder())
+						.addLast(new TankJoinMsgDecoder())
+						.addLast(new TankJoinMsgEncoder())
 						.addLast(new ClientChannelHandler());
 					}
 				})
@@ -92,7 +91,7 @@ class ClientChannelHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		//ctx.writeAndFlush(Unpooled.copiedBuffer("hello".getBytes()));
-		ctx.writeAndFlush(new TankMsg(345, 2));
+		ctx.writeAndFlush(new TankJoinMsg(345, 2));
 	}
 
 	@Override
@@ -101,7 +100,7 @@ class ClientChannelHandler extends ChannelInboundHandlerAdapter {
 		//byte[] bys = new byte[buf.readableBytes()];
 		//buf.getBytes(buf.readerIndex(), bys);
 		//System.out.println(new String(bys));
-		System.out.println((TankMsg)msg);
+		System.out.println((TankJoinMsg)msg);
 		
 	}
 
