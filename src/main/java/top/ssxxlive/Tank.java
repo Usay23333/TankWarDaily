@@ -116,6 +116,7 @@ public class Tank extends GameObject {
 	public void die() {
 		System.out.println(this.getID());
 		this.living = false;
+		//GameModel.getInstance().remove(this);
 		GameModel.getInstance().add(new Boom(x, y));
 	}
 	

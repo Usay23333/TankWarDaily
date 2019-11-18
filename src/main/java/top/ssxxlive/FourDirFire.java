@@ -4,6 +4,7 @@ public class FourDirFire implements FireStrategy {
 
     @Override
     public void fire(Tank tank) {
+        if(!tank.isLiving()) return;
         Direction[] dirs = Direction.values();
 
         for (Direction dir : dirs) {

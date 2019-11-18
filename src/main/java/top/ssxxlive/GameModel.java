@@ -13,7 +13,7 @@ public class GameModel {
     CollideChain cc = new CollideChain();
 
     private int gameTopStart, gameDownStart, gameLeftStart, gameRightStart;
-    private int mainTankBoom = 0;
+    private int mainTankBoom = 0; //被击中&死亡次数 备用
 
     private static final GameModel GM = new GameModel();
 
@@ -111,7 +111,7 @@ public class GameModel {
         g.setColor(Color.WHITE);
         g.drawString("子弹数量：" + getBadBulletAmount(), 20, 50);
         g.drawString("敌方数量：" + getBadTankAmount(), 20, 70);
-        g.drawString("被击中 " + mainTankBoom +" 次！", 20, 90);
+        g.drawString("按 R 键复活！", 20, 90);
         g.drawString("按 ESC 生产敌军！", gameRightStart - 160, 50);
         g.drawString("当前火力模式：" + ResourceMgr.getInstance()
                 .getFireText(mainTank1.getFireLevel()), gameRightStart - 160, 70);

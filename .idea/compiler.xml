@@ -9,8 +9,8 @@
         <module name="TankWarDaily" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TankWarDaily" target="12" />
+    <bytecodeTargetLevel target="8">
+      <module name="TankWarDaily" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

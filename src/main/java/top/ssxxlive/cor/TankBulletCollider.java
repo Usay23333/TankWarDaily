@@ -1,8 +1,6 @@
 package top.ssxxlive.cor;
 
-import top.ssxxlive.Bullet;
-import top.ssxxlive.GameObject;
-import top.ssxxlive.Tank;
+import top.ssxxlive.*;
 
 public class TankBulletCollider implements Collider {
 
@@ -12,6 +10,7 @@ public class TankBulletCollider implements Collider {
             Tank t = (Tank) o1;
             Bullet b = (Bullet) o2;
             if(t.getRect().intersects(b.getRect()) && t.getGroup() != b.getGroup()) {
+                if(t.getGroup() == Group.GOOD) System.out.println("MainTankBoom");
                 t.die();
                 b.die();
                 return true;

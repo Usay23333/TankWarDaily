@@ -14,6 +14,15 @@ public class TankFrame extends Frame {
 	private static final long serialVersionUID = 1L;
 	private String frameTitle = "Tank";
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
+	private boolean isGamePause = false;
+
+	public boolean isGamePause() {
+		return isGamePause;
+	}
+
+	public void setGamePause(boolean gamePause) {
+		isGamePause = gamePause;
+	}
 
 	TankFrame() {
 
@@ -55,9 +64,7 @@ public class TankFrame extends Frame {
 	}
 
 	public void paint(Graphics g) {
-
-		GameModel.getInstance().paint(g);
-
+		if(!isGamePause) GameModel.getInstance().paint(g);
 	}
 
 	class TankFrameKeyListener extends KeyAdapter {
@@ -115,6 +122,16 @@ public class TankFrame extends Frame {
 				break;
 			case KeyEvent.VK_ESCAPE:
 				GameModel.getInstance().newAITanks();
+			case KeyEvent.VK_R:
+				boolean isMainTankLive = false;
+				for (int i = 0; i < GameModel.getInstance().objects.size(); i++) {
+					if(GameModel.getInstance().objects.get(i) instanceof Tank) {
+						Tank tank = (Tank) GameModel.getInstance().objects.get(i);
+						if(tank.getGroup() == Group.GOOD) isMainTankLive = true;
+					}
+				}
+				if(isMainTankLive) return;
+				GameModel.getInstance().TIANCONGYUN();
 			}
 
 			changeTankDir();
@@ -152,6 +169,7 @@ public class TankFrame extends Frame {
 				setTitle("又好了+_+!");
 				new Thread(()->{
 					try {
+						setGamePause(false);
 						Thread.sleep(2000);
 						setTitle(frameTitle);
 					} catch (InterruptedException i) {
@@ -166,6 +184,7 @@ public class TankFrame extends Frame {
 		public void windowLostFocus(WindowEvent l) {
 
 			setTitle("游戏崩溃了-_-!!");
+			setGamePause(true);
 			isFirstLostFocus = false;
 
 		}
