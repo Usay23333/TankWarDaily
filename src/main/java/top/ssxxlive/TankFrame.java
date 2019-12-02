@@ -15,6 +15,7 @@ public class TankFrame extends Frame {
 	private String frameTitle = "Tank";
 	private static final int GAME_WIDTH = 960, GAME_HEIGHT = 480;
 	private boolean isGamePause = false;
+	private ResourceMgr rm = ResourceMgr.getInstance();
 
 	public boolean isGamePause() {
 		return isGamePause;
@@ -28,6 +29,7 @@ public class TankFrame extends Frame {
 
 		setTitle(frameTitle);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setIconImage(rm.getGoodTankU());
 
 		this.addKeyListener(new TankFrameKeyListener());
 		this.addWindowListener(new WindowAdapter() {
@@ -64,7 +66,14 @@ public class TankFrame extends Frame {
 	}
 
 	public void paint(Graphics g) {
-		if(!isGamePause) GameModel.getInstance().paint(g);
+		if(isGamePause) {
+            Color c = g.getColor();
+            g.setColor(Color.WHITE);
+            g.drawString("Paused",(getWidth() - 14) / 2,getHeight() / 2);
+            g.setColor(c);
+		} else {
+            GameModel.getInstance().paint(g);
+        }
 	}
 
 	class TankFrameKeyListener extends KeyAdapter {
